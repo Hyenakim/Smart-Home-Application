@@ -1,1 +1,1 @@
-print("test")
+console.log("test")
