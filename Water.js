@@ -1,0 +1,1 @@
+const SmartAppliance =require('./SmartAppliance');
