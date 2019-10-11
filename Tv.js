@@ -1,17 +1,17 @@
 const SmartAppliance =require('./SmartAppliance');
 const Lamp =require('./Lamp');
 var rl = require('readline');
-var prompts = rl.createInterface({input:process.stdin,output:process.stdout});
+var prompts = rl.createInterface({input:process.stdin,output:process.stdout,terminal:false});
 
 class Tv extends SmartAppliance{
  
       constructor(channel,vol){
-      super()
+      super("Tv")
+
       this.channel = channel;
       this.vol = vol;
         prompts.question(" Turn on? Turn off  :",(str)=>{
            super.getCommand(str,"Tv");
-          
            if(str == "Turn on"){
             console.log('1. 볼륨 높이기');
            console.log('2. 볼륨 낮추기');
