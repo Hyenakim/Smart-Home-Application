@@ -12,6 +12,20 @@ class SmartAppliance{
         this.power = false;
         this.type = type;
     }
+    getCommand(command,app){
+        switch(command){
+            case 'On':
+                console.log(app+" Turn On")
+                say.speak(app+" Turn On")
+                    break;
+            case 'Off':
+                console.log(app+" Turned Off")    
+                say.speak(app+ "Turned Off")
+                break;
+        
+        }
+    }
+    
     // getCommand(command,app){
     //     switch(command){
     //         case 'Turn on':
@@ -65,5 +79,3 @@ class SmartAppliance{
   
 
 module.exports = SmartAppliance
-//module.exports.power = power/
-//module.exports.setPower = setPower
