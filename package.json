@@ -9,7 +9,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "forecast": "^0.3.2",
     "prompt": "^1.0.0",
-    "say": "^0.16.0"
+    "say": "^0.16.0",
+    "weather-js": "^2.0.0"
   }
 }
