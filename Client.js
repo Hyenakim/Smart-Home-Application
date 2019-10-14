@@ -40,8 +40,10 @@ class Client{
     async display(){
         var cmd = 0;
         while(cmd != 5){
+            console.log("==============================")
             console.log('관리하실 가전제품을 선택해주세요');
-            console.log('-- 1. 티비 2.램프 3.정수기 4.에어컨 --');
+            console.log('-- 1. 티비 2.램프 3.정수기 4.에어컨 5.종료--');
+            console.log("==============================")
             await new Promise((resolve, reject)=>{
                 prompts.question("숫자를 입력해주세요: ",function(num){
                     cmd = num;
@@ -49,23 +51,35 @@ class Client{
                     prompts.prompt()
                     if(num==1){
                         //tv
+                        console.log("티비입니다")
+                        resolve();
                     }
                     else if(num==2){
                         //lamp
+                        console.log("램프입니다")
+                        resolve();
                     }
                     else if(num==3){
                         //water
+                        console.log("정수기입니다")
+                        resolve();
                     }
                     else if(num==4){
                         if(!aircon.getPower()){
                             aircon.setPower().then(()=>{
                                 if(aircon.getPower()){
-                                    aircon.setTemperature();
+                                    setTimeout(()=>{
+                                        aircon.setTemperature();
+                                    })
+                                    resolve();
+                                }else{
                                     resolve();
                                 }
                             })
                         }else{
-                            aircon.setTemperature();
+                            setTimeout(()=>{
+                                aircon.setTemperature();
+                            })
                             resolve();
                         }
                     }
