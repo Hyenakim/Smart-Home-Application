@@ -1,6 +1,4 @@
 const SmartAppliance =require('./SmartAppliance');
-var power = 0
-var input = 0
 const readline = require('readline')
 const rl = readline.createInterface({
   input: process.stdin,
@@ -13,17 +11,21 @@ class Aircon extends SmartAppliance{
         super("Aircon")
         this.temp = temperature;
     }
-    setTemperature(){
-          rl.question('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n', (answer) => {
-            if(answer==1){
-                this.temp--;
-                console.log(this.temp+"도로 변경되었습니다.")
-            }
-            else if(answer==2){
-                this.temp++;      
-                console.log(this.temp+"도로 변경되었습니다.")
-            }
-          })
+    async setTemperature(){
+        await new Promise((resolve,reject)=>{
+            rl.question('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n', (answer) => {
+                if(answer==1){
+                    this.temp--;
+                    console.log(this.temp+"도로 변경되었습니다.")
+                    resolve()
+                }
+                else if(answer==2){
+                    this.temp++;      
+                    console.log(this.temp+"도로 변경되었습니다.")
+                    resolve()
+                }
+              })
+        })
     }
     automatic(temperature){
         power=1;
@@ -38,24 +40,3 @@ class Aircon extends SmartAppliance{
     }
 }
 module.exports = Aircon
-
-
-
-
-
-
-
-
-
-// const setPower = () => {
-//   return new Promise((resolve, reject) => {
-//     rl.question(" Turn on? Turn off  :",(str)=> {
-//         if(str == "Turn on"){
-//             power = 1
-//         }else
-//             power = 0;
-//       resolve()
-//     })
-//   })
-// }
-

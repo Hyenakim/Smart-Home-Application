@@ -16,50 +16,38 @@ class position {
 var now = new position(0,0)
 class Cleaner extends SmartAppliance{
     constructor(){
-        super()
-        const main = async () => {
-            await setPower()
-            if(power == 1){
-                super.getCommand("Turn on","cleaner")
-                console.log("리모콘으로 청소기를 움직여 보세요.")
-                while(input!=5){
-                    await setMove()
-                }
-            }else
-                super.getCommand("Turn off","cleaner")
-            rl.pause()
-        }
-        main()
+        super("Clenaer")
     }
-}
-const setPower = () => {
-    return new Promise((resolve, reject) => {
-      rl.question(" Turn on? Turn off  :",(str)=> {
-          if(str == "Turn on"){
-              power = 1
-          }else
-              power = 0;
-        resolve()
-      })
-    })
-}
-const setMove = () => {
-    return new Promise((resolve, reject) => {
-      rl.question('현재위치 :('+now.y+','+now.x+')\n1. Left\n2. Right\n3. Up\n4. down\n5. 종료\n', (answer) => {
-        if(answer==1){
-            now.y++;
-        }
-        else if(answer==2){
-            now.y--;      
-        }
-        else if(answer==3){
-            now.x++;
-        }
-        else if(answer==4)
-            now.x--;
-        else input = 5;
-        resolve()
-      })
-    })
+    async setMove(resolve){
+        var answer = 1;
+        return new Promise((resolve, reject) => {
+                rl.question('현재위치 :('+now.y+','+now.x+')\n1. Left 2. Right 3. Up 4. down 5. 멈추기\n', (answer) => {
+                if(answer==1){
+                    now.y++;
+                    this.setMove(resolve)
+                    resolve()
+                }
+                else if(answer==2){
+                    now.y--;      
+                    this.setMove(resolve)
+                    resolve()
+                }
+                else if(answer==3){
+                    now.x++;
+                    this.setMove(resolve)
+                    resolve()
+                }
+                else if(answer==4){
+                    now.x--;
+                    this.setMove(resolve)
+                    resolve()
+                }
+                else {
+                    resolve()
+                }
+                })
+          })
+          
+    }
 }
 module.exports = Cleaner

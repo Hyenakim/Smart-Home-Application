@@ -7,6 +7,7 @@ const Microwave = require('./Microwave')
 const SmartAppliance = require('./SmartAppliance')
 
 var aircon
+var cleaner
 var rl = require('readline');
 var prompts = rl.createInterface({input: process.stdin,output:process.stdout,terminal:false});
 
@@ -14,13 +15,13 @@ class Client{
     constructor(){
         var weather = require('weather-js');
         aircon = new Aircon(0);
-        weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
-            aircon = new Aircon(result[0].current.temperature);
-        })
-        
+        //weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
+        //    aircon = new Aircon(result[0].current.temperature);
+        //})
         //this.tv = new Tv(10,60);
         //this.lamp = new Lamp(1);
         //this.water = new Water(50,100);
+        cleaner = new Cleaner();
     }
 
     weather(){
@@ -39,10 +40,10 @@ class Client{
         
     async display(){
         var cmd = 0;
-        while(cmd != 5){
+        while(cmd != 7){
             console.log("==============================")
             console.log('관리하실 가전제품을 선택해주세요');
-            console.log('-- 1. 티비 2.램프 3.정수기 4.에어컨 5.종료--');
+            console.log('-- 1. 티비 2.램프 3.정수기 4.에어컨 5.청소기 6.전자레인지 7.종료--');
             console.log("==============================")
             await new Promise((resolve, reject)=>{
                 prompts.question("숫자를 입력해주세요: ",function(num){
@@ -64,24 +65,27 @@ class Client{
                         console.log("정수기입니다")
                         resolve();
                     }
-                    else if(num==4){
+                    else if(num==4){    //에어컨
                         if(!aircon.getPower()){
                             aircon.setPower().then(()=>{
-                                if(aircon.getPower()){
-                                    setTimeout(()=>{
-                                        aircon.setTemperature();
-                                    })
-                                    resolve();
-                                }else{
-                                    resolve();
-                                }
+                                resolve();
                             })
                         }else{
-                            setTimeout(()=>{
-                                aircon.setTemperature();
+                            aircon.setTemperature().then(()=>{
+                                resolve();
                             })
-                            resolve();
                         }
+                    }
+                    else if(num==5){    //청소기
+                        if(!cleaner.getPower()){
+                            cleaner.setPower().then(()=>{
+                                resolve();
+                            })
+                        }else{
+                            cleaner.setMove().then(()=>{
+                                resolve();
+                            })
+                        } 
                     }
                 });
             });
