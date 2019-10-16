@@ -2,6 +2,7 @@ const say = require('say');
 const prompt = require('prompt')
 //var power;
 const readline = require('readline')
+const rl_sync = require('readline-sync')
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -22,6 +23,8 @@ class SmartAppliance{
                 console.log(app+" Turned Off")    
                 say.speak(app+ "Turned Off")
                 break;
+            default:
+                console.log('뭔가 이상합니다')
         
         }
     }
@@ -43,7 +46,7 @@ class SmartAppliance{
 
     setPower(){
         return new Promise((resolve, reject)=>{
-            rl.question(" Turn on? Turn off  :",(str)=> {
+            rl_sync.question(" Turn on? Turn off  :",(str)=> {
                 switch(str){
                     case 'Turn on':
                         say.speak(this.type+" Turn On");
