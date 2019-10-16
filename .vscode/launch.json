@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/package.json"
+            "program": "${workspaceFolder}/Client.js"
         }
     ]
 }

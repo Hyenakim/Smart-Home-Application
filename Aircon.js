@@ -11,9 +11,31 @@ class Aircon extends SmartAppliance{
         super("Aircon")
         this.temp = temperature;
     }
+    // setTemperature(callback){
+    //     new Promise((resolve,reject)=>{
+    //         rl.question('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n3. 종료\n', 
+    //             (answer) => {
+    //                 resolve(answer);
+    //         });
+    //     }).then((answer)=>{
+    //         answer = Number(answer);
+    //         if(answer==1){
+    //             this.temp--;
+    //             console.log(this.temp+"도로 변경되었습니다.");
+    //             this.setTemperature(callback);
+    //         }
+    //         else if(answer==2){
+    //             this.temp++;      
+    //             console.log(this.temp+"도로 변경되었습니다.");
+    //             this.setTemperature(callback);
+    //         }else{
+    //             callback();
+    //         }
+    //     })
+    // }
     async setTemperature(){
         await new Promise((resolve,reject)=>{
-            rl.question('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n', (answer) => {
+            rl.question('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n3. 종료\n', (answer) => {
                 if(answer==1){
                     this.temp--;
                     console.log(this.temp+"도로 변경되었습니다.")
@@ -23,8 +45,10 @@ class Aircon extends SmartAppliance{
                     this.temp++;      
                     console.log(this.temp+"도로 변경되었습니다.")
                     resolve()
+                }else{
+                    resolve()
                 }
-              })
+            })
         })
     }
     automatic(temperature){

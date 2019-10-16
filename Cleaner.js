@@ -19,35 +19,33 @@ class Cleaner extends SmartAppliance{
         super("Clenaer")
     }
     async setMove(resolve){
-        var answer = 1;
         return new Promise((resolve, reject) => {
-                rl.question('현재위치 :('+now.y+','+now.x+')\n1. Left 2. Right 3. Up 4. down 5. 멈추기\n', (answer) => {
+            rl.question('현재위치 :('+now.y+','+now.x+')\n1. Left 2. Right 3. Up 4. down 5. 멈추기\n', (answer) => {
                 if(answer==1){
                     now.y++;
                     this.setMove(resolve)
-                    resolve()
+                    //resolve()
                 }
                 else if(answer==2){
                     now.y--;      
                     this.setMove(resolve)
-                    resolve()
+                    //resolve()
                 }
                 else if(answer==3){
                     now.x++;
                     this.setMove(resolve)
-                    resolve()
+                    //resolve()
                 }
                 else if(answer==4){
                     now.x--;
                     this.setMove(resolve)
-                    resolve()
+                    //resolve()
                 }
                 else {
-                    resolve()
+                    resolve();
                 }
-                })
-          })
-          
+            })
+        })
     }
 }
 module.exports = Cleaner

@@ -8,6 +8,7 @@ const SmartAppliance = require('./SmartAppliance')
 
 var aircon
 var cleaner
+var microwave
 var rl = require('readline');
 var prompts = rl.createInterface({input: process.stdin,output:process.stdout,terminal:false});
 
@@ -15,13 +16,14 @@ class Client{
     constructor(){
         var weather = require('weather-js');
         aircon = new Aircon(0);
-        //weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
-        //    aircon = new Aircon(result[0].current.temperature);
-        //})
+        weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
+           aircon = new Aircon(result[0].current.temperature);
+        })
         //this.tv = new Tv(10,60);
         //this.lamp = new Lamp(1);
         //this.water = new Water(50,100);
         cleaner = new Cleaner();
+        microwave = new Microwave();
     }
 
     weather(){
@@ -68,7 +70,9 @@ class Client{
                     else if(num==4){    //에어컨
                         if(!aircon.getPower()){
                             aircon.setPower().then(()=>{
-                                resolve();
+                                aircon.setTemperature().then(()=>{
+                                    resolve();
+                                })
                             })
                         }else{
                             aircon.setTemperature().then(()=>{
@@ -79,10 +83,25 @@ class Client{
                     else if(num==5){    //청소기
                         if(!cleaner.getPower()){
                             cleaner.setPower().then(()=>{
-                                resolve();
+                                cleaner.setMove().then(()=>{
+                                    resolve();
+                                })
                             })
                         }else{
                             cleaner.setMove().then(()=>{
+                                resolve();
+                            })
+                        } 
+                    }
+                    else if(num==6){    //전자레인지
+                        if(!microwave.getPower()){
+                            microwave.setPower().then(()=>{
+                                microwave.setTime().then(()=>{
+                                    resolve();
+                                })
+                            })
+                        }else{
+                            microwave.setTime().then(()=>{
                                 resolve();
                             })
                         } 
