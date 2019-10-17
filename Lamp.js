@@ -32,4 +32,5 @@ async menu(){
         }
     }
 
+
 module.exports = Lamp

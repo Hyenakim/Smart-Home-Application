@@ -16,23 +16,25 @@ class SmartAppliance{
     
    setPower(){
         return new Promise((resolve, reject)=>{
-            console.log("On, Off ? : ");
-            var result = rl_sync.prompt();
-            switch(result){
-                case 'On':
-                    this.power = true;
-                    say.speak(this.type+" Turn On", null, null, (err)=>{
+
+           console.log('On / Off?')
+           prompts.get(['message'],(error,result)=>{
+            console.log(result.message)
+            switch(result.message){
+               
+                    case 'On':
+                        say.speak(this.type+" Turn On");
+                        this.power = true;
                         resolve();
-                    });
-                    //resolve();
-                    break;
-                case 'Off':
-                    say.speak("Appliance Turned Off");
-                    this.power = false;
-                    resolve();
-                    break;
-                }
-            });
+                        break;
+                        case 'Off':
+                       say.speak("Appliance Turned Off");
+                        this.power = false;
+                        resolve();
+                        break;
+                        }
+                    })
+        });
     }
 
     getPower(){
