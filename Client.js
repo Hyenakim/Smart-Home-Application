@@ -7,13 +7,17 @@ const Microwave = require('./Microwave')
 const SmartAppliance = require('./SmartAppliance')
 var tv
 var aircon
-
 var lamp
 var water
 var rl_sync = require('readline-sync')
 var loopContinue = true;
 var n =1;
 class Client{
+    constructor(){
+      
+       
+        
+    }
     weather(){
     var weather = require('weather-js');
     aircon = new Aircon(0);
@@ -26,9 +30,8 @@ class Client{
         aircon.automatic(result[0].current.temperature)
        
         } 
-    });
-    }       
-
+        });
+    } 
 }
  
  async function display(){
@@ -58,7 +61,7 @@ class Client{
                     }, 1000);
               }
               else if(num==2){
-                 lamp = new Lamp(2);
+                lamp = new Lamp(2)
                  setTimeout(() => {
                     resolve('ok')
                     }, 1000);
@@ -66,7 +69,7 @@ class Client{
               }               
               else if(num==3){
                   //water
-                 water = new Water(50,'한컵');
+                  water = new Water(50,'한컵');
                  setTimeout(() => {
                     resolve('ok')
                     }, 1000);

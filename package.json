@@ -4,12 +4,13 @@
   "description": "smart home",
   "main": "Client.js",
   "scripts": {
-    "start": "node Client.js"
+    "start": "node Client2.js"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "prompt": "^1.0.0",
+    "readline-sync": "^1.4.10",
     "say": "^0.16.0",
     "weather-js": "^2.0.0"
   }
