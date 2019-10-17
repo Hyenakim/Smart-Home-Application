@@ -6,37 +6,41 @@ const Cleaner = require('./Cleaner')
 const Microwave = require('./Microwave')
 const SmartAppliance = require('./SmartAppliance')
 var rl_sync = require('readline-sync')
-
 var tv
+var lamp
+var water
 var aircon
 var cleaner
 var microwave
 var rl = require('readline');
 var prompts = rl.createInterface({input: process.stdin,output:process.stdout,terminal:false});
-
 class Client{
     constructor(){
-        aircon = new Aircon(0);
-        tv = new Tv(1,1);
-        cleaner = new Cleaner();
-        microwave = new Microwave();
         var weather = require('weather-js');
+        aircon = new Aircon(0);
+        tv = new Tv(10,6)
+        lamp = new Lamp(2)
+        //water = new Water(50,'500ml')
         weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
            aircon = new Aircon(result[0].current.temperature);
         })
+        
+       // cleaner = new Cleaner();
+        //microwave = new Microwave();
     }
+
     weather(){
-        var weather = require('weather-js');
-        weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
-            if(err) console.log(err);
-            console.log("현재 온도는 "+result[0].current.temperature+"도 입니다.");
-            prompts.pause();
-            if(result[0].current.temperature>25)  {
-            //var aircon = new Aircon(25);
-            aircon.automatic(result[0].current.temperature)
-            prompts.pause();
-            } 
-        });
+    var weather = require('weather-js');
+    weather.find({search: 'Seoul, Korea', degreeType: 'C'}, function(err, result) {
+        if(err) console.log(err);
+        console.log("현재 온도는 "+result[0].current.temperature+"도 입니다.");
+        prompts.pause();
+        if(result[0].current.temperature>25)  {
+        //var aircon = new Aircon(25);
+        aircon.automatic(result[0].current.temperature)
+        prompts.pause();
+        } 
+    });
     }       
         
     async display(){
@@ -49,10 +53,13 @@ class Client{
             console.log('숫자를 입력해주세요')
             const num = rl_sync.prompt()
             await new Promise((resolve, reject)=>{
+                // prompts.question("숫자를 입력해주세요: ",function(num){
+                //     cmd = num;
+                //     prompts.setPrompt('>');
+                //     prompts.prompt()
                     if(num==1){
-                        //tv
                         if(!tv.getPower()){
-                            tv.setPower().then(()=>{
+                           tv.setPower().then(()=>{
                                 tv.menu().then(()=>{
                                     resolve();
                                 })
@@ -64,18 +71,34 @@ class Client{
                         }
                     }
                     else if(num==2){
-                        //lamp
-                        console.log("램프입니다")
-                        resolve();
+                        if(!lamp.getPower()){
+                            lamp.setPower().then(()=>{
+                                 lamp.menu().then(()=>{
+                                     resolve();
+                                 })
+                             })
+                         }else{
+                             lamp.menu().then(()=>{
+                                 resolve();
+                             })
+                         }
                     }
                     else if(num==3){
-                        //water
-                        console.log("정수기입니다")
-                        resolve();
+                        if(!water.getPower()){
+                            water.setPower().then(()=>{
+                                water.menu().then(()=>{
+                                    resolve();
+                                })
+                            })
+                        }else{
+                            water.menu().then(()=>{
+                                resolve();
+                            })
+                        }
                     }
                     else if(num==4){    //에어컨
                         if(!aircon.getPower()){
-                            aircon.setPower().then(()=>{                 
+                            aircon.setPower().then(()=>{
                                 aircon.setTemperature().then(()=>{
                                     resolve();
                                 })
@@ -112,6 +135,7 @@ class Client{
                             })
                         } 
                     }
+                //});
             });
         }
     }
