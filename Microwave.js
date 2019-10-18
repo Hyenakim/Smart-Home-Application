@@ -1,13 +1,6 @@
 const SmartAppliance =require('./SmartAppliance');
-//var i = 0
 var add = 0
-const readline = require('readline')
 const rl_sync = require('readline-sync')
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal:false
-})
 class Microwave extends SmartAppliance{
     constructor(){
         super('Microwave')
@@ -16,7 +9,6 @@ class Microwave extends SmartAppliance{
       return new Promise((resolve, reject) => {
         console.log("몇초 돌리시겠습니까?");
         var answer = rl_sync.prompt()
-        //rl.question('몇초 돌리시겠습니까? (종료:-1)\n', (answer) => {
           if(answer==-1){
               input = -1;
               resolve()
@@ -38,7 +30,6 @@ class Microwave extends SmartAppliance{
               resolve()
             });
           }
-        //})
       })
     }
 }

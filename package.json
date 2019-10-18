@@ -9,8 +9,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "prompt": "^1.0.0",
     "readline-sync": "^1.4.10",
+    "request": "^2.88.0",
     "say": "^0.16.0",
     "weather-js": "^2.0.0"
   }

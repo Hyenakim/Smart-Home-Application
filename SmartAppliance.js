@@ -1,39 +1,33 @@
 const say = require('say');
 const prompts = require('prompt')
-//var power;
 const readline = require('readline')
 const rl_sync = require('readline-sync')
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal:false
-})
 class SmartAppliance{
     constructor(type){
         this.power = false;
         this.type = type;
+        this.sleep = false;
     }
     
    setPower(){
         return new Promise((resolve, reject)=>{
 
            console.log('On / Off?')
-           prompts.get(['message'],(error,result)=>{
-            console.log(result.message)
-            switch(result.message){
-               
-                    case 'On':
-                        say.speak(this.type+" Turn On");
-                        this.power = true;
-                        resolve();
-                        break;
-                        case 'Off':
-                       say.speak("Appliance Turned Off");
-                        this.power = false;
-                        resolve();
-                        break;
-                        }
-                    })
+           var result = rl_sync.prompt();
+            switch(result){
+                case 'On':
+                    this.power = true;
+                    if(this.sleep==false)
+                        say.speak(this.type+" Turn On",null,null,(err)=>{resolve()});
+                    else resolve()
+                    break;
+                case 'Off':
+                    this.power = false;
+                    if(this.sleep==false)    
+                        say.speak("Appliance Turned Off",null,null,(err)=>{resolve()});
+                    else resolve()
+                    break;
+            }
         });
     }
 
