@@ -11,7 +11,6 @@ class SmartAppliance{
     
    setPower(){
         return new Promise((resolve, reject)=>{
-
            console.log('On / Off?')
            var result = rl_sync.prompt();
             switch(result){
@@ -30,7 +29,9 @@ class SmartAppliance{
             }
         });
     }
-
+    controlPower(){
+      this.power = true;
+     }
     getPower(){
       return this.power;
     }

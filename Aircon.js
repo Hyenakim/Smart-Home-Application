@@ -1,10 +1,4 @@
 const SmartAppliance =require('./SmartAppliance');
-const readline = require('readline')
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal:false
-})
 var rl_sync = require('readline-sync')
 
 class Aircon extends SmartAppliance{
@@ -15,8 +9,8 @@ class Aircon extends SmartAppliance{
     async setTemperature(){
         return new Promise((resolve,reject)=>{
             var answer = 0
+            console.log('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n3. 종료')
             while(answer!=3){
-                console.log('현재온도 :'+this.temp+'\n1. 온도 낮춤\n2. 온도 높임\n3. 종료\n')
                 answer = rl_sync.prompt();
                 if(answer==1){
                     this.temp--;
@@ -34,14 +28,13 @@ class Aircon extends SmartAppliance{
         })
     }
     automatic(temperature){
-        power=1;
         if(temperature>25){
             this.temp = 25;
-            console.log("25도로 실내온도를 맞춥니다");
+            console.log("--> 25도로 실내온도를 맞춥니다");
         }
-        else if(temperature<10){
-            this.temp=10;
-            console.log("18도로 실내온도를 맞춥니다.")
+        else if(temperature<14){
+            this.temp=14;
+            console.log("--> 14도로 실내온도를 맞춥니다.")
         }
     }
 }

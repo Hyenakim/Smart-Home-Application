@@ -1,47 +1,37 @@
-const SmartAppliance =require('./SmartAppliance');
-var add = 0
+const SmartAppliance = require('./SmartAppliance');
 const rl_sync = require('readline-sync')
-class Microwave extends SmartAppliance{
-    constructor(){
+class Microwave extends SmartAppliance {
+    constructor() {
         super('Microwave')
     }
-    async setTime(){
-      return new Promise((resolve, reject) => {
-        console.log("몇초 돌리시겠습니까?");
-        var answer = rl_sync.prompt()
-          if(answer==-1){
-              input = -1;
-              resolve()
-          }else{
-            add = answer
-            var ar = [];
-            for(var i = 0; i < add; i++){
-              ar.push(
-                new Promise((resolve, reject) =>{
-                  (function(x){
-                    setTimeout(function(){
-                      msg_time(resolve)
-                    }, 1000*x);
-                  })(i)
-                })
-              );
+    setTime() {
+        var sec = 0;
+        console.log('몇초 돌리시겠습니까? (종료:-1)');
+        sec = Number(rl_sync.prompt());
+        if (sec > 0) {
+            let start = new Date();
+            let cnt = 0;
+            while (true) {
+                let now = new Date();
+                let timeDiff = (now - start) / 1000; //[sec]
+                if (timeDiff > cnt) {
+                    if (timeDiff >= sec) {
+                        process.stdout.write('\n');
+                        console.log("조리가 완료되었습니다.");
+                        break;
+                    }
+                    cnt++;
+                    process.stdout.clearLine();
+                    process.stdout.cursorTo(0); 
+                    process.stdout.write('[');
+                    for (let i = 0; i < cnt; i++) 
+                        process.stdout.write(' ■');
+                    for (let i = cnt; i < sec; i++) 
+                        process.stdout.write(' ' + (1 + i));
+                    process.stdout.write(' ]');
+                }
             }
-            Promise.all(ar).then(function(){
-              resolve()
-            });
-          }
-      })
+        }
     }
-}
-function msg_time(resolve){
-   process.stdout.write("■")
-  if (add == 1) {      
-    // 시간이 종료 되었으면..
-    add = 0
-    console.log("조리가 완료되었습니다.")
-  }else{
-    add = add - 1; // 남은시간 -1초
-  }
-  resolve()
 }
 module.exports = Microwave

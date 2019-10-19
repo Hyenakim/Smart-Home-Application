@@ -14,28 +14,15 @@ class Cleaner extends SmartAppliance{
     async setMove(){
         await new Promise((resolve, reject) => {
             var answer = 0
-            while(answer != 5){
-                console.log('현재위치 :('+now.y+','+now.x+')\n1. Left 2. Right 3. Up 4. down 5. 멈추기\n')
+            console.log('현재위치 :('+now.y+','+now.x+')\n1. Left 2. Right 3. Up 4. down 5. 멈추기')
+            while(answer != 5){    
                 answer = rl_sync.prompt()
-                if(answer==1){
-                    now.y++;
-                    resolve()
-                }
-                else if(answer==2){
-                    now.y--;      
-                    resolve()
-                }
-                else if(answer==3){
-                    now.x++;
-                    resolve()
-                }
-                else if(answer==4){
-                    now.x--;
-                    resolve()
-                }
-                else {
-                    resolve();
-                }
+                if(answer==1){ now.y++; resolve() }
+                else if(answer==2){ now.y--; resolve() }
+                else if(answer==3){ now.x++; resolve() }
+                else if(answer==4){ now.x--; resolve() }
+                else { resolve(); }
+                console.log('현재위치 :('+now.y+','+now.x+')')
             }
         })
     }

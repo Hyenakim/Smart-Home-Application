@@ -16,12 +16,6 @@ class Water extends SmartAppliance{
             console.log(this.temp+"도의 물 "+this.liter+"만큼 나옵니다.")
             resolve();
         })
-        }
-        
-            
-            }
-        
-
-   
-
+    }
+}
 module.exports = Water
